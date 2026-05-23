@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ebf0f5; 
+            --surface-color: #ffffff; 
+            --text-main: #4a5568;
+            --text-heading: #2d3748;
+            --shadow-light: #ffffff;
+            --shadow-dark: #b8c9d9;
+            --accent-start: #3b82f6; 
+            --accent-end: #4f46e5;   
+        }
+
+        html, body { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            overflow: hidden; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+
+        #app-wrapper {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: var(--bg-color); 
+            z-index: 9999999; overflow-y: auto; overflow-x: hidden;
+        }
+
+        .neu-flat { background-color: var(--surface-color); box-shadow: 10px 10px 20px rgba(184, 201, 217, 0.4), -10px -10px 20px rgba(255, 255, 255, 0.8); }
+        .neu-pressed { background-color: var(--bg-color); box-shadow: inset 5px 5px 10px 0 rgba(184, 201, 217, 0.5), inset -5px -5px 10px 0 rgba(255, 255, 255, 0.8); }
+        .neu-btn { background-color: var(--surface-color); box-shadow: 6px 6px 12px rgba(184, 201, 217, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.8); transition: all 0.2s ease-in-out; color: var(--text-main); border: none; outline: none; cursor: pointer; }
+        .neu-btn:active { box-shadow: inset 4px 4px 8px rgba(184, 201, 217, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.7); }
+        .neu-btn-primary { background: linear-gradient(135deg, var(--accent-start), var(--accent-end)); box-shadow: 6px 6px 12px rgba(184, 201, 217, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.8); color: white; transition: all 0.2s ease-in-out; border: none; outline: none; cursor: pointer; }
+        .neu-btn-primary:active { transform: translateY(2px); box-shadow: 3px 3px 6px rgba(184, 201, 217, 0.4), -3px -3px 6px rgba(255, 255, 255, 0.8); }
+        .neu-input { background-color: var(--bg-color); box-shadow: inset 4px 4px 8px rgba(163, 177, 198, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.6); border: none; outline: none; color: var(--text-heading); width: 100%; padding: 0.75rem 1rem; border-radius: 1rem; transition: all 0.2s ease; }
+        .neu-input:focus { box-shadow: inset 6px 6px 10px rgba(163, 177, 198, 0.7), inset -6px -6px 10px rgba(255, 255, 255, 0.8); }
+
+        .timeline-container { position: relative; padding-left: 2rem; }
+        .timeline-container::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 2px; box-shadow: inset 2px 2px 4px rgba(163,177,198, 0.5), inset -2px -2px 4px rgba(255,255,255, 0.5); }
+        .timeline-item { position: relative; margin-bottom: 2rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -2.35rem; top: 0.25rem; width: 1.2rem; height: 1.2rem; border-radius: 50%; background: var(--accent-start); box-shadow: 0 0 0 4px var(--bg-color), 3px 3px 6px rgba(163,177,198,0.6); }
+
+        .hidden-element { display: none !important; }
+        .loader { border: 4px solid var(--bg-color); border-top: 4px solid var(--accent-end); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: auto; box-shadow: 2px 2px 5px rgba(163, 177, 198, 0.6);}
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+
+<div id="app-wrapper">
+    <div class="px-4 pt-4 pb-4 sticky top-0 z-50 bg-[var(--bg-color)] shadow-[0_10px_10px_-10px_rgba(184,201,217,0.5)]">
+        <nav id="public-nav" class="neu-flat rounded-full max-w-7xl mx-auto px-6 py-3">
+            <div class="flex justify-between items-center h-12">
+                <div class="flex items-center">
+                    <div class="neu-pressed w-10 h-10 rounded-full flex items-center justify-center mr-3 text-blue-600">
+                        <i class="fas fa-graduation-cap text-xl"></i>
+                    </div>
+                    <span class="font-bold text-xl text-gray-800" id="nav-title">Profilku</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#beranda" class="neu-btn px-4 py-2 rounded-full text-sm font-medium">Beranda</a>
+                    <a href="#tentang" class="neu-btn px-4 py-2 rounded-full text-sm font-medium">Tentang</a>
+                    <a href="#jejak" class="neu-btn px-4 py-2 rounded-full text-sm font-medium">Jejak Langkah</a>
+                    <a href="#karya" class="neu-btn px-4 py-2 rounded-full text-sm font-medium">Karya</a>
+                    <a href="#kontak" class="neu-btn px-4 py-2 rounded-full text-sm font-medium">Kontak</a>
+                    <button onclick="showLoginModal()" class="neu-btn-primary px-5 py-2 rounded-full font-medium ml-2"><i class="fas fa-lock text-sm mr-1"></i> Login</button>
+                </div>
+                <div class="flex items-center md:hidden">
+                    <button onclick="toggleMobileMenu()" class="neu-btn w-10 h-10 rounded-full flex items-center justify-center text-gray-600 focus:outline-none"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </nav>
+        
+        <div id="mobile-menu" class="hidden md:hidden mt-4 neu-flat rounded-2xl p-4 mx-auto max-w-7xl">
+            <div class="flex flex-col space-y-3">
+                <a href="#beranda" onclick="toggleMobileMenu()" class="neu-btn px-4 py-3 rounded-xl text-center font-medium">Beranda</a>
+                <a href="#tentang" onclick="toggleMobileMenu()" class="neu-btn px-4 py-3 rounded-xl text-center font-medium">Tentang</a>
+                <a href="#jejak" onclick="toggleMobileMenu()" class="neu-btn px-4 py-3 rounded-xl text-center font-medium">Jejak Langkah</a>
+                <a href="#karya" onclick="toggleMobileMenu()" class="neu-btn px-4 py-3 rounded-xl text-center font-medium">Karya</a>
+                <a href="#kontak" onclick="toggleMobileMenu()" class="neu-btn px-4 py-3 rounded-xl text-center font-medium">Kontak</a>
+                <button onclick="showLoginModal(); toggleMobileMenu();" class="neu-btn-primary px-4 py-3 rounded-xl font-bold"><i class="fas fa-lock mr-2"></i> Login Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-screen" class="flex flex-col items-center justify-center min-h-screen">
+        <div class="loader mb-6"></div>
+        <div class="neu-pressed px-6 py-3 rounded-full"><p class="font-medium">Memuat Data Server...</p></div>
+    </div>
+
+    <div id="public-view" class="hidden-element pb-20">
+        <section id="beranda" class="py-12 md:py-20 relative overflow-hidden">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="neu-flat rounded-[40px] p-8 md:p-14">
+                    <div class="inline-block neu-flat p-2 rounded-full mb-8">
+                        <img id="pub-foto" src="" alt="Foto" class="w-32 h-32 md:w-48 md:h-48 rounded-full object-cover">
+                    </div>
+                    <h1 id="pub-nama" class="text-4xl md:text-5xl font-extrabold mb-3 text-[var(--text-heading)]">Nama Guru</h1>
+                    <div class="inline-block neu-pressed px-6 py-2 rounded-full mb-8">
+                        <h2 id="pub-gelar" class="text-lg md:text-xl font-medium text-blue-600">Gelar / Posisi</h2>
+                    </div>
+                    <p id="pub-sambutan" class="text-lg max-w-2xl mx-auto mb-10 opacity-80">...</p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="#kontak" class="neu-btn-primary font-bold py-3 px-8 rounded-full">Hubungi Saya</a>
+                        <a href="#karya" class="neu-btn font-bold py-3 px-8 rounded-full">Lihat Karya</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tentang" class="py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="neu-flat rounded-[30px] p-8 md:p-12 text-center">
+                    <h2 class="text-3xl font-bold text-[var(--text-heading)] mb-6">Tentang Saya</h2>
+                    <div class="neu-pressed w-20 h-2 rounded-full mx-auto mb-8"></div>
+                    <p id="pub-tentang" class="text-lg leading-relaxed mb-10 text-justify md:text-center opacity-80">...</p>
+                    <div id="pub-sosmed" class="flex flex-wrap justify-center gap-6"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="jejak" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold mb-4">Jejak Langkah</h2><div class="neu-pressed w-20 h-2 rounded-full mx-auto"></div></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="neu-flat rounded-[30px] p-8"><h3 class="text-xl font-bold text-center mb-8">Pendidikan</h3><div id="timeline-pendidikan" class="timeline-container"></div></div>
+                    <div class="neu-flat rounded-[30px] p-8"><h3 class="text-xl font-bold text-center mb-8">Kerja</h3><div id="timeline-kerja" class="timeline-container"></div></div>
+                    <div class="neu-flat rounded-[30px] p-8"><h3 class="text-xl font-bold text-center mb-8">Organisasi</h3><div id="timeline-organisasi" class="timeline-container"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="karya" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold mb-4">Galeri Karya</h2><div class="neu-pressed w-20 h-2 rounded-full mx-auto"></div></div>
+                <div class="neu-flat rounded-[30px] p-4 flex flex-wrap justify-center gap-4 mb-12 max-w-4xl mx-auto" id="karya-filters"></div>
+                <div id="pub-karya-grid" class="flex overflow-x-auto gap-8 pb-12 pt-6 px-6 -mx-6 snap-x hide-scroll"></div>
+            </div>
+        </section>
+
+        <section id="kontak" class="py-16 mb-10">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold mb-4">Hubungi Saya</h2><div class="neu-pressed w-20 h-2 rounded-full mx-auto"></div></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="neu-flat rounded-[30px] p-8 md:p-10 flex flex-col justify-center items-center text-center">
+                        <div class="neu-pressed w-16 h-16 rounded-full flex items-center justify-center text-blue-600 mb-8"><i class="fas fa-quote-left text-2xl"></i></div>
+                        <p class="text-xl italic font-medium leading-relaxed mb-6 opacity-80">"Pendidikan adalah senjata paling ampuh yang bisa Anda gunakan untuk mengubah dunia."</p>
+                    </div>
+                    <div class="neu-flat rounded-[30px] p-8 md:p-10">
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)">
+                            <div class="mb-5"><label class="block font-medium mb-2 pl-2 text-sm">Nama</label><input type="text" id="kontak-nama" required class="neu-input"></div>
+                            <div class="mb-5"><label class="block font-medium mb-2 pl-2 text-sm">Email</label><input type="email" id="kontak-email" required class="neu-input"></div>
+                            <div class="mb-8"><label class="block font-medium mb-2 pl-2 text-sm">Pesan</label><textarea id="kontak-pesan" required rows="4" class="neu-input resize-none"></textarea></div>
+                            <button type="submit" id="btn-kirim-pesan" class="neu-btn-primary w-full font-bold py-3 rounded-xl text-lg"><i class="fas fa-paper-plane mr-2"></i> Kirim Pesan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="admin-view" class="hidden-element flex flex-col md:flex-row min-h-screen">
+        <div class="w-full md:w-72 flex-shrink-0 z-10 md:relative hidden md:block p-4" id="admin-sidebar">
+            <div class="neu-flat rounded-[30px] h-full flex flex-col p-6 sticky top-4">
+                <div class="text-center mb-8 mt-4"><h2 class="text-2xl font-bold">Dashboard</h2><p class="text-sm opacity-70">Admin Panel</p></div>
+                <nav class="flex-1 space-y-4">
+                    <a href="#" onclick="switchAdminTab('tab-profil')" class="admin-tab neu-btn-primary block py-3 px-6 text-center font-medium rounded-xl">Profil</a>
+                    <a href="#" onclick="switchAdminTab('tab-jejak')" class="admin-tab neu-btn block py-3 px-6 text-center font-medium rounded-xl">Jejak</a>
+                    <a href="#" onclick="switchAdminTab('tab-karya')" class="admin-tab neu-btn block py-3 px-6 text-center font-medium rounded-xl">Karya</a>
+                    <a href="#" onclick="switchAdminTab('tab-pesan')" class="admin-tab neu-btn block py-3 px-6 text-center font-medium rounded-xl">Pesan <span id="badge-pesan" class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full ml-1">0</span></a>
+                </nav>
+                <div class="mt-8 space-y-4">
+                    <button onclick="goToPublic()" class="neu-btn w-full block py-3 px-6 font-medium rounded-xl text-blue-600">Lihat Web</button>
+                    <button onclick="logout()" class="neu-btn w-full block py-3 px-6 font-medium rounded-xl text-red-500">Keluar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 p-4 md:p-8 overflow-y-auto w-full pb-20">
+            <div class="flex justify-between items-center mb-8 md:hidden neu-flat p-4 rounded-2xl">
+                <h1 class="text-xl font-bold">Admin Panel</h1>
+                <button onclick="document.getElementById('admin-sidebar').classList.toggle('hidden')" class="neu-btn w-10 h-10 rounded-full"><i class="fas fa-bars"></i></button>
+            </div>
+
+            <div id="tab-profil" class="admin-tab-content neu-flat p-8 rounded-[30px]">
+                <h2 class="text-2xl font-bold mb-8">Informasi Profil</h2>
+                <form onsubmit="saveProfile(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div><label class="block font-medium mb-2 pl-2">Nama Lengkap</label><input type="text" id="input-nama" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">Gelar / Posisi</label><input type="text" id="input-gelar" class="neu-input"></div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-2 pl-2">Upload Foto Profil</label>
+                            <div class="flex items-center gap-4">
+                                <input type="file" id="upload-foto" accept="image/*" class="neu-input bg-white cursor-pointer" onchange="compressImage(event)">
+                                <img id="preview-foto" src="" class="w-14 h-14 rounded-xl object-cover hidden-element border-2 border-[var(--shadow-dark)]">
+                            </div>
+                            <input type="hidden" id="input-foto">
+                        </div>
+                        
+                        <div class="md:col-span-2"><label class="block font-medium mb-2 pl-2">Kalimat Sambutan</label><input type="text" id="input-sambutan" class="neu-input"></div>
+                        <div class="md:col-span-2"><label class="block font-medium mb-2 pl-2">Tentang Saya</label><textarea id="input-tentang" rows="4" class="neu-input resize-none"></textarea></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                        <div><label class="block font-medium mb-2 pl-2">Instagram (URL)</label><input type="text" id="input-ig" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">Facebook (URL)</label><input type="text" id="input-fb" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">Threads (URL)</label><input type="text" id="input-threads" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">TikTok (URL)</label><input type="text" id="input-tiktok" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">WhatsApp (Mulai 62)</label><input type="text" id="input-wa" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">LinkedIn (URL)</label><input type="text" id="input-linkedin" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">YouTube (URL)</label><input type="text" id="input-yt" class="neu-input"></div>
+                        <div><label class="block font-medium mb-2 pl-2">Email</label><input type="text" id="input-email" class="neu-input"></div>
+                    </div>
+                    <button type="submit" class="neu-btn-primary px-8 py-3 rounded-xl font-bold float-right">Simpan Profil</button>
+                    <div class="clear-both"></div>
+                </form>
+            </div>
+
+            <div id="tab-jejak" class="admin-tab-content hidden-element">
+                <div class="neu-flat p-8 rounded-[30px] mb-8">
+                    <h2 class="text-2xl font-bold mb-8">Tambah Jejak</h2>
+                    <form onsubmit="addJejak(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block font-medium mb-2 pl-2">Kategori</label>
+                            <select id="jejak-tipe" class="neu-input">
+                                <option value="Pendidikan">Pendidikan</option><option value="Kerja">Pengalaman Kerja</option><option value="Organisasi">Organisasi</option>
+                            </select>
+                        </div>
+                        <div><label class="block font-medium mb-2 pl-2">Tahun</label><input type="text" id="jejak-tahun" required class="neu-input"></div>
+                        <div class="md:col-span-2"><label class="block font-medium mb-2 pl-2">Institusi</label><input type="text" id="jejak-institusi" required class="neu-input"></div>
+                        <div class="md:col-span-2"><label class="block font-medium mb-2 pl-2">Deskripsi</label><textarea id="jejak-deskripsi" rows="2" required class="neu-input resize-none"></textarea></div>
+                        <div class="md:col-span-2 text-right"><button type="submit" class="neu-btn-primary px-8 py-3 rounded-xl font-bold">Tambah</button></div>
+                    </form>
+                </div>
+                <div class="neu-flat p-8 rounded-[30px] overflow-x-auto">
+                    <table class="w-full text-left"><thead><tr class="opacity-60 border-b"><th class="p-3">Kategori</th><th class="p-3">Tahun</th><th class="p-3">Institusi</th><th class="p-3">Aksi</th></tr></thead><tbody id="table-jejak"></tbody></table>
+                </div>
+            </div>
+
+            <div id="tab-karya" class="admin-tab-content hidden-element">
+                <div class="neu-flat p-8 rounded-[30px] mb-8">
+                    <h2 class="text-2xl font-bold mb-8">Tambah Karya</h2>
+                    <form onsubmit="addKarya(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2"><label class="block font-medium mb-2 pl-2">Judul</label><input type="text" id="karya-judul" required class="neu-input"></div>
+                        <div>
+                            <label class="block font-medium mb-2 pl-2">Kategori</label>
+                            <input list="kategori-list" id="karya-kategori" class="neu-input" required><datalist id="kategori-list"></datalist>
+                        </div>
+                        
+                        <div>
+                            <label class="block font-medium mb-2 pl-2">Upload Gambar Cover</label>
+                            <div class="flex items-center gap-4">
+                                <input type="file" id="upload-karya" accept="image/*" class="neu-input bg-white cursor-pointer" required onchange="compressKaryaImage(event)">
+                                <img id="preview-karya" src="" class="w-14 h-14 rounded-xl object-cover hidden-element border-2 border-[var(--shadow-dark)]">
+                            </div>
+                            <input type="hidden" id="karya-gambar-b64" required>
+                        </div>
+
+                        <div class="md:col-span-2"><label class="block font-medium mb-2 pl-2">URL Link (Opsional)</label><input type="text" id="karya-link" class="neu-input"></div>
+                        <div class="md:col-span-2"><label class="block font-medium mb-2 pl-2">Deskripsi</label><textarea id="karya-deskripsi" rows="2" required class="neu-input resize-none"></textarea></div>
+                        <div class="md:col-span-2 text-right"><button type="submit" class="neu-btn-primary px-8 py-3 rounded-xl font-bold">Tambah Karya</button></div>
+                    </form>
+                </div>
+                <div class="neu-flat p-8 rounded-[30px] overflow-x-auto">
+                    <table class="w-full text-left"><thead><tr class="opacity-60 border-b"><th class="p-3">Gambar</th><th class="p-3">Judul</th><th class="p-3">Kategori</th><th class="p-3">Aksi</th></tr></thead><tbody id="table-karya"></tbody></table>
+                </div>
+            </div>
+
+            <div id="tab-pesan" class="admin-tab-content hidden-element">
+                <div class="neu-flat p-8 rounded-[30px] overflow-x-auto">
+                    <h2 class="text-2xl font-bold mb-8">Kotak Masuk</h2>
+                    <table class="w-full text-left"><thead><tr class="opacity-60 border-b"><th class="p-3">Tanggal</th><th class="p-3">Pengirim</th><th class="p-3">Pesan</th><th class="p-3">Aksi</th></tr></thead><tbody id="table-pesan"></tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="hidden-element fixed inset-0 flex items-center justify-center z-[99999999] backdrop-blur-sm bg-black/20">
+        <div class="neu-flat p-10 rounded-[40px] max-w-sm w-full mx-4 relative border border-white/20">
+            <button onclick="hideLoginModal()" class="neu-btn absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center"><i class="fas fa-times"></i></button>
+            <div class="text-center mb-8"><h2 class="text-2xl font-bold">Login</h2><p id="login-error" class="text-red-500 text-sm mt-3 font-medium hidden-element">Kredensial tidak valid!</p></div>
+            <form onsubmit="handleLogin(event)">
+                <div class="mb-6"><label class="block font-medium mb-2 pl-4 text-sm">Username</label><input type="text" id="login-user" required class="neu-input rounded-full"></div>
+                <div class="mb-8"><label class="block font-medium mb-2 pl-4 text-sm">Password</label><input type="password" id="login-pass" required class="neu-input rounded-full"></div>
+                <button type="submit" id="btn-login" class="neu-btn-primary w-full font-bold py-4 rounded-full text-lg">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-8 right-8 neu-flat bg-green-50 px-8 py-4 rounded-full flex items-center transform translate-y-20 opacity-0 transition-all duration-300 z-[99999999] border-2 border-green-400">
+        <span id="toast-msg" class="font-bold text-green-700">Sukses!</span>
+    </div>
+
+</div>
+
+<script>
+    // =========================================================
+    // PASTIKAN MENGGANTI URL DI BAWAH INI DENGAN URL WEB APP ANDA
+    // =========================================================
+    const IS_PREVIEW = false; 
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzBBilACpXFBDdDnDshU8jiZou0ai0bKk__SjTTkLaiSGbGDLEpET9jV-cPbHica59f/exec"; 
+    // =========================================================
+
+    let appData = { profil: {}, jejak: [], karya: [], pesan: [] };
+    let currentUser = null; 
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if(IS_PREVIEW) { loadDummyData(); } else { fetchDataFromGAS(); }
+    });
+
+    function loadDummyData() { renderAll(); }
+
+    function fetchDataFromGAS() {
+        if(GAS_URL === "MASUKKAN_URL_WEB_APP_ANDA_DI_SINI") {
+            document.getElementById('loading-screen').innerHTML = "<p class='text-red-500 font-bold text-center mt-10'>SILAKAN MASUKKAN URL WEB APP GOOGLE SCRIPT<br>DI FILE HTML ANDA.</p>";
+            return;
+        }
+        fetch(`${GAS_URL}?action=getData`).then(res => res.json()).then(data => {
+            if(data.status === 'success') { appData = data.data; renderAll(); }
+        }).catch(e => {
+            document.getElementById('loading-screen').innerHTML = "<p class='text-red-500 font-bold'>Error koneksi Database.</p>";
+        });
+    }
+
+    function renderAll() {
+        document.getElementById('loading-screen').classList.add('hidden-element');
+        document.getElementById('public-view').classList.remove('hidden-element');
+        renderProfil(); renderJejak(); renderKaryaFilters(); renderKarya('Semua'); renderAdminTables();
+    }
+
+    function renderProfil() {
+        const p = appData.profil;
+        document.getElementById('pub-foto').src = p.foto || 'https://via.placeholder.com/150';
+        document.getElementById('pub-nama').innerText = p.nama || 'Nama Anda';
+        document.getElementById('pub-gelar').innerText = p.gelar || '-';
+        document.getElementById('pub-sambutan').innerText = p.sambutan || '';
+        document.getElementById('pub-tentang').innerText = p.tentang || '';
+        
+        let sosmedHtml = '';
+        if(p.ig) sosmedHtml += `<a href="${p.ig}" target="_blank" class="neu-btn w-14 h-14 rounded-full flex items-center justify-center text-pink-600 text-2xl"><i class="fab fa-instagram"></i></a>`;
+        if(p.wa) sosmedHtml += `<a href="https://wa.me/${p.wa}" target="_blank" class="neu-btn w-14 h-14 rounded-full flex items-center justify-center text-green-500 text-2xl"><i class="fab fa-whatsapp"></i></a>`;
+        if(p.yt) sosmedHtml += `<a href="${p.yt}" target="_blank" class="neu-btn w-14 h-14 rounded-full flex items-center justify-center text-red-600 text-2xl"><i class="fab fa-youtube"></i></a>`;
+        document.getElementById('pub-sosmed').innerHTML = sosmedHtml;
+
+        document.getElementById('input-nama').value = p.nama || '';
+        document.getElementById('input-gelar').value = p.gelar || '';
+        document.getElementById('input-sambutan').value = p.sambutan || '';
+        document.getElementById('input-tentang').value = p.tentang || '';
+        document.getElementById('input-ig').value = p.ig || '';
+        document.getElementById('input-fb').value = p.fb || '';
+        document.getElementById('input-threads').value = p.threads || '';
+        document.getElementById('input-tiktok').value = p.tiktok || '';
+        document.getElementById('input-wa').value = p.wa || '';
+        document.getElementById('input-linkedin').value = p.linkedin || '';
+        document.getElementById('input-yt').value = p.yt || '';
+        document.getElementById('input-email').value = p.email || '';
+
+        document.getElementById('input-foto').value = p.foto || '';
+        if (p.foto) {
+            document.getElementById('preview-foto').src = p.foto;
+            document.getElementById('preview-foto').classList.remove('hidden-element');
+        } else {
+            document.getElementById('preview-foto').classList.add('hidden-element');
+        }
+    }
+
+    function renderJejak() {
+        const edu = appData.jejak.filter(j => j.tipe === 'Pendidikan');
+        const work = appData.jejak.filter(j => j.tipe === 'Kerja');
+        const org = appData.jejak.filter(j => j.tipe === 'Organisasi');
+        const gen = (arr) => arr.map(j => `<div class="timeline-item"><span class="text-xs font-bold text-blue-600 neu-pressed px-3 py-1 rounded-full inline-block mb-3">${j.tahun}</span><h4 class="font-bold mb-1">${j.institusi}</h4><p class="text-sm opacity-80">${j.deskripsi}</p></div>`).join('');
+        document.getElementById('timeline-pendidikan').innerHTML = gen(edu) || '<p class="text-sm opacity-50">Belum ada data.</p>';
+        document.getElementById('timeline-kerja').innerHTML = gen(work) || '<p class="text-sm opacity-50">Belum ada data.</p>';
+        document.getElementById('timeline-organisasi').innerHTML = gen(org) || '<p class="text-sm opacity-50">Belum ada data.</p>';
+    }
+
+    function renderKaryaFilters() {
+        const cats = [...new Set(appData.karya.map(k => k.kategori))].filter(c => c);
+        document.getElementById('karya-filters').innerHTML = `<button class="filter-btn neu-btn-primary px-6 py-3 rounded-full font-medium active" onclick="filterKarya('Semua')">Semua</button>` + cats.map(cat => `<button class="filter-btn neu-btn px-6 py-3 rounded-full font-medium" onclick="filterKarya('${cat}')">${cat}</button>`).join('');
+        document.getElementById('kategori-list').innerHTML = cats.map(cat => `<option value="${cat}">`).join('');
+    }
+
+    function filterKarya(kategori) {
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.className = btn.innerText === kategori ? 'filter-btn neu-btn-primary px-6 py-3 rounded-full font-medium active' : 'filter-btn neu-btn px-6 py-3 rounded-full font-medium');
+        renderKarya(kategori);
+    }
+
+    function renderKarya(filter) {
+        const list = filter === 'Semua' ? appData.karya : appData.karya.filter(k => k.kategori === filter);
+        document.getElementById('pub-karya-grid').innerHTML = list.map(k => `<div class="neu-flat rounded-[30px] p-5 flex flex-col flex-shrink-0 w-[280px] md:w-[320px] snap-center"><img src="${k.gambar}" class="w-full h-40 object-cover rounded-xl mb-4"><span class="text-xs font-bold text-blue-600 mb-2 uppercase tracking-wider">${k.kategori}</span><h3 class="font-bold mb-2 text-xl">${k.judul}</h3><p class="text-sm opacity-80 mb-4 flex-grow">${k.deskripsi}</p>${k.link && k.link !== '#' ? `<a href="${k.link}" target="_blank" class="neu-btn text-center py-2 rounded-xl font-bold text-blue-600 hover:text-blue-700 mt-auto text-sm"><i class="fas fa-external-link-alt mr-2"></i> Buka Tautan</a>` : ''}</div>`).join('') || '<p class="w-full text-center opacity-50">Belum ada karya.</p>';
+    }
+
+    function showLoginModal() { document.getElementById('login-modal').classList.remove('hidden-element'); }
+    function hideLoginModal() { document.getElementById('login-modal').classList.add('hidden-element'); }
+    function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+
+    function handleLogin(e) {
+        e.preventDefault();
+        const u = document.getElementById('login-user').value, p = document.getElementById('login-pass').value, btn = document.getElementById('btn-login');
+        btn.innerHTML = "Loading..."; btn.disabled = true;
+        fetch(`${GAS_URL}?action=login&user=${encodeURIComponent(u)}&pass=${encodeURIComponent(p)}`).then(res => res.json()).then(data => {
+            btn.innerHTML = "Masuk"; btn.disabled = false;
+            if(data.status === 'success') {
+                hideLoginModal(); document.getElementById('public-view').classList.add('hidden-element');
+                document.getElementById('public-nav').parentElement.classList.add('hidden-element');
+                document.getElementById('admin-view').classList.remove('hidden-element');
+            } else { document.getElementById('login-error').classList.remove('hidden-element'); }
+        }).catch(() => { btn.innerHTML = "Masuk"; btn.disabled = false; });
+    }
+
+    function logout() { location.reload(); }
+    function goToPublic() { document.getElementById('admin-view').classList.add('hidden-element'); document.getElementById('public-view').classList.remove('hidden-element'); document.getElementById('public-nav').parentElement.classList.remove('hidden-element'); }
+    function switchAdminTab(tabId) {
+        document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden-element'));
+        document.getElementById(tabId).classList.remove('hidden-element');
+        document.querySelectorAll('.admin-tab').forEach(el => el.className = 'admin-tab neu-btn block py-3 px-6 text-center font-medium rounded-xl');
+        event.currentTarget.className = 'admin-tab neu-btn-primary block py-3 px-6 text-center font-medium rounded-xl';
+    }
+    function showToast(msg) {
+        const toast = document.getElementById('toast'); document.getElementById('toast-msg').innerText = msg;
+        toast.classList.remove('translate-y-20', 'opacity-0'); setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+    }
+
+    // Kompresi Foto Profil
+    function compressImage(event) {
+        const file = event.target.files[0]; if (!file) return;
+        const reader = new FileReader(); reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            const img = new Image(); img.src = e.target.result;
+            img.onload = function() {
+                const canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
+                let width = img.width, height = img.height;
+                if (width > height) { if (width > 400) { height *= 400 / width; width = 400; } } else { if (height > 400) { width *= 400 / height; height = 400; } }
+                canvas.width = width; canvas.height = height; ctx.drawImage(img, 0, 0, width, height);
+                const b64 = canvas.toDataURL('image/jpeg', 0.7);
+                document.getElementById('input-foto').value = b64;
+                document.getElementById('preview-foto').src = b64; document.getElementById('preview-foto').classList.remove('hidden-element');
+            };
+        };
+    }
+
+    // Kompresi Gambar Karya
+    function compressKaryaImage(event) {
+        const file = event.target.files[0]; if (!file) return;
+        const reader = new FileReader(); reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            const img = new Image(); img.src = e.target.result;
+            img.onload = function() {
+                const canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
+                let width = img.width, height = img.height;
+                // Karya menggunakan resolusi lebih lebar agar bagus di thumbnail card
+                if (width > height) { if (width > 600) { height *= 600 / width; width = 600; } } else { if (height > 600) { width *= 600 / height; height = 600; } }
+                canvas.width = width; canvas.height = height; ctx.drawImage(img, 0, 0, width, height);
+                const b64 = canvas.toDataURL('image/jpeg', 0.7);
+                document.getElementById('karya-gambar-b64').value = b64;
+                document.getElementById('preview-karya').src = b64; document.getElementById('preview-karya').classList.remove('hidden-element');
+            };
+        };
+    }
+
+    function postData(action, payload, callback) {
+        fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: action, data: payload }) }).then(res => res.json()).then(data => callback(data));
+    }
+
+    function saveProfile(e) {
+        e.preventDefault();
+        const data = {
+            nama: document.getElementById('input-nama').value, gelar: document.getElementById('input-gelar').value, foto: document.getElementById('input-foto').value, sambutan: document.getElementById('input-sambutan').value, tentang: document.getElementById('input-tentang').value, ig: document.getElementById('input-ig').value, fb: document.getElementById('input-fb').value, threads: document.getElementById('input-threads').value, tiktok: document.getElementById('input-tiktok').value, wa: document.getElementById('input-wa').value, linkedin: document.getElementById('input-linkedin').value, yt: document.getElementById('input-yt').value, email: document.getElementById('input-email').value
+        };
+        const btn = e.target.querySelector('button'); btn.innerHTML = "Menyimpan...";
+        postData('updateProfile', data, (res) => {
+            if(res.status === 'success') { appData.profil = data; renderProfil(); showToast("Profil Disimpan!"); }
+            btn.innerHTML = "Simpan Profil";
+        });
+    }
+
+    function addJejak(e) { e.preventDefault(); const data = { id: 'j'+Date.now(), tipe: document.getElementById('jejak-tipe').value, tahun: document.getElementById('jejak-tahun').value, institusi: document.getElementById('jejak-institusi').value, deskripsi: document.getElementById('jejak-deskripsi').value }; postData('addJejak', data, () => { appData.jejak.push(data); e.target.reset(); renderJejak(); renderAdminTables(); showToast("Sukses!"); }); }
+    
+    function addKarya(e) { 
+        e.preventDefault(); 
+        const gambarBase64 = document.getElementById('karya-gambar-b64').value;
+        if(!gambarBase64) { alert("Harap masukkan file gambar!"); return; }
+
+        const data = { 
+            id: 'k'+Date.now(), 
+            judul: document.getElementById('karya-judul').value, 
+            kategori: document.getElementById('karya-kategori').value, 
+            gambar: gambarBase64, 
+            link: document.getElementById('karya-link').value, 
+            deskripsi: document.getElementById('karya-deskripsi').value 
+        }; 
+        
+        const btn = e.target.querySelector('button'); btn.innerHTML = "Menyimpan Gambar..."; btn.disabled = true;
+        
+        postData('addKarya', data, () => { 
+            // Refresh data dari server agar url gambar thumbnail Google Drive didapatkan
+            fetchDataFromGAS(); 
+            e.target.reset(); 
+            document.getElementById('preview-karya').classList.add('hidden-element');
+            document.getElementById('karya-gambar-b64').value = "";
+            btn.innerHTML = "Tambah Karya"; btn.disabled = false;
+            showToast("Sukses Upload Karya!"); 
+        }); 
+    }
+    
+    function handleContactSubmit(e) { e.preventDefault(); const data = { id: 'p'+Date.now(), tanggal: new Date().toLocaleDateString('id-ID'), pengirim: document.getElementById('kontak-nama').value, email: document.getElementById('kontak-email').value, isi: document.getElementById('kontak-pesan').value }; postData('addMessage', data, () => { showToast("Pesan dikirim!"); e.target.reset(); }); }
+
+    function deleteItem(type, id) {
+        if(!confirm("Yakin hapus?")) return;
+        postData('deleteData', {tipe: type, id: id}, () => {
+            if(type==='jejak') { appData.jejak = appData.jejak.filter(i=>i.id!==id); renderJejak(); }
+            if(type==='karya') { appData.karya = appData.karya.filter(i=>i.id!==id); renderKaryaFilters(); filterKarya('Semua'); }
+            if(type==='pesan') { appData.pesan = appData.pesan.filter(i=>i.id!==id); }
+            renderAdminTables(); showToast("Dihapus");
+        });
+    }
+
+    function renderAdminTables() {
+        document.getElementById('table-jejak').innerHTML = appData.jejak.map(j => `<tr><td class="p-3">${j.tipe}</td><td class="p-3">${j.tahun}</td><td class="p-3">${j.institusi}</td><td class="p-3"><button onclick="deleteItem('jejak', '${j.id}')" class="text-red-500">Hapus</button></td></tr>`).join('');
+        document.getElementById('table-karya').innerHTML = appData.karya.map(k => `<tr><td class="p-3"><img src="${k.gambar}" class="w-10 h-10 object-cover"></td><td class="p-3">${k.judul}</td><td class="p-3">${k.kategori}</td><td class="p-3"><button onclick="deleteItem('karya', '${k.id}')" class="text-red-500">Hapus</button></td></tr>`).join('');
+        document.getElementById('table-pesan').innerHTML = appData.pesan.map(p => `<tr><td class="p-3">${p.tanggal}</td><td class="p-3">${p.pengirim}</td><td class="p-3">${p.isi}</td><td class="p-3"><button onclick="deleteItem('pesan', '${p.id}')" class="text-red-500">Hapus</button></td></tr>`).join('');
+        document.getElementById('badge-pesan').innerText = appData.pesan.length;
+    }
+</script>
+</body>
+</html>
