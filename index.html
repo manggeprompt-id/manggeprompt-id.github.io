@@ -63,6 +63,233 @@
       box-shadow: 0 14px 32px rgba(2, 132, 199, 0.14);
     }
 
+    /* =========================================================================
+       3D FROSTED GLASSMORPHISM CAROUSEL & BUTTONS (UNTUK MENU KATALOG)
+       ========================================================================= */
+    .catalog-3d-stage {
+      position: relative;
+      perspective: 1400px;
+      padding: 18px 0 28px 0;
+    }
+
+    /* Ambient Glow di Belakang Kartu Tengah */
+    .catalog-3d-stage::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 340px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.26) 0%, rgba(99, 102, 241, 0.16) 45%, rgba(8, 13, 22, 0) 75%);
+      filter: blur(28px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .catalog-carousel-track {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding: 34px calc(50% - 175px);
+      position: relative;
+      z-index: 2;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      cursor: grab;
+    }
+
+    .catalog-carousel-track:active {
+      cursor: grabbing;
+    }
+
+    .catalog-carousel-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .catalog-carousel-track {
+        padding: 28px calc(50% - 145px);
+        gap: 16px;
+      }
+    }
+
+    /* Kartu Kaca Buram 3 Dimensi */
+    .glass-3d-card {
+      flex: 0 0 350px;
+      scroll-snap-align: center;
+      position: relative;
+      border-radius: 24px;
+      background: linear-gradient(
+        145deg,
+        rgba(30, 41, 59, 0.62) 0%,
+        rgba(15, 23, 42, 0.48) 55%,
+        rgba(8, 13, 22, 0.72) 100%
+      );
+      backdrop-filter: blur(24px) saturate(165%);
+      -webkit-backdrop-filter: blur(24px) saturate(165%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 24px 48px -12px rgba(0, 0, 0, 0.7),
+        0 4px 16px rgba(14, 165, 233, 0.08),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.35),
+        inset 0 -2px 6px rgba(14, 165, 233, 0.15);
+      transform-style: preserve-3d;
+      transition:
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.42s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        filter 0.35s ease;
+      user-select: none;
+    }
+
+    @media (max-width: 640px) {
+      .glass-3d-card {
+        flex: 0 0 290px;
+      }
+    }
+
+    /* Kilau Kaca Diagonal pada Permukaan Kartu */
+    .glass-3d-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(255, 255, 255, 0.03) 32%,
+        rgba(56, 189, 248, 0.04) 70%,
+        rgba(139, 92, 246, 0.12) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* State saat Kartu Berada di Tengah (Membesar & Menonjol 3D) */
+    .glass-3d-card.is-center-card {
+      border-color: rgba(56, 189, 248, 0.65);
+      box-shadow:
+        0 30px 65px -10px rgba(2, 132, 199, 0.4),
+        0 0 32px rgba(99, 102, 241, 0.25),
+        inset 0 2px 2px rgba(255, 255, 255, 0.55),
+        inset 0 -3px 10px rgba(56, 189, 248, 0.28);
+      z-index: 10;
+    }
+
+    /* Tombol Kaca Buram 3D (3D Frosted Glass Buttons) */
+    .btn-glass-3d-primary {
+      position: relative;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.85) 0%, rgba(79, 70, 229, 0.85) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      box-shadow:
+        0 10px 20px -4px rgba(14, 165, 233, 0.45),
+        0 3px 0 rgba(30, 58, 138, 0.85),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.65);
+      color: #FFFFFF;
+      font-weight: 800;
+      transition: all 0.2s ease;
+    }
+
+    .btn-glass-3d-primary:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.95) 0%, rgba(99, 102, 241, 0.95) 100%);
+      box-shadow:
+        0 14px 26px -4px rgba(56, 189, 248, 0.6),
+        0 4px 0 rgba(30, 58, 138, 0.9),
+        inset 0 1.5px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-glass-3d-primary:active {
+      transform: translateY(1px);
+      box-shadow:
+        0 4px 10px rgba(14, 165, 233, 0.35),
+        0 1px 0 rgba(30, 58, 138, 0.85),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-glass-3d-secondary {
+      position: relative;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow:
+        0 8px 18px -4px rgba(0, 0, 0, 0.45),
+        0 2px 0 rgba(15, 23, 42, 0.9),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      color: #E2E8F0;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .btn-glass-3d-secondary:hover {
+      transform: translateY(-2px);
+      background: rgba(56, 189, 248, 0.16);
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #FFFFFF;
+      box-shadow:
+        0 12px 22px -4px rgba(14, 165, 233, 0.28),
+        0 3px 0 rgba(15, 23, 42, 0.95),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Tombol Navigasi Panah Kiri/Kanan Kaca 3D */
+    .carousel-nav-orb {
+      width: 46px;
+      height: 46px;
+      border-radius: 9999px;
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.78), rgba(15, 23, 42, 0.88));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.55),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.45);
+      color: #38BDF8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      z-index: 20;
+    }
+
+    .carousel-nav-orb:hover {
+      transform: scale(1.1);
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.85), rgba(79, 70, 229, 0.85));
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 14px 30px rgba(14, 165, 233, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.7);
+    }
+
+    .carousel-nav-orb:active {
+      transform: scale(0.95);
+    }
+
+    /* Badge Harga & Kategori Kaca Buram 3D */
+    .badge-glass-3d {
+      background: rgba(15, 23, 42, 0.68);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .badge-price-3d {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.92) 0%, rgba(99, 102, 241, 0.92) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 18px rgba(14, 165, 233, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.65);
+    }
+
     /* Tombol Pill 4 Dokumen SPJ */
     .doc-pill-btn {
       border-radius: 16px;
@@ -159,9 +386,7 @@
       z-index: 15;
     }
 
-    /* =========================================================================
-       PERBAIKAN TOMBOL WHATSAPP MELAYANG (LAPTOP & HP)
-       ========================================================================= */
+    /* TOMBOL WHATSAPP MELAYANG (LAPTOP & HP) */
     @keyframes waPulseGlow {
       0%, 100% { box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.45); }
       50% { box-shadow: 0 10px 28px rgba(37, 211, 102, 0.65), 0 0 0 8px rgba(37, 211, 102, 0); }
@@ -200,7 +425,6 @@
       border-radius: 9999px;
     }
 
-    /* Desktop / Laptop View */
     @media (min-width: 1024px) {
       .desktop-sidebar { display: flex !important; }
       .mobile-bottom-nav { display: none !important; }
@@ -222,7 +446,6 @@
       }
     }
 
-    /* HP / Mobile View — Lingkaran Presisi 52x52px di Atas Bottom Navigation Bar */
     @media (max-width: 1023px) {
       .desktop-sidebar { display: none !important; }
       .mobile-bottom-nav { display: flex !important; }
@@ -245,7 +468,6 @@
       }
     }
 
-    /* Aturan Cetak A4 Resmi untuk SPJ Instansi */
     @media print {
       @page { size: A4 portrait; margin: 10mm; }
       body * { visibility: hidden !important; }
@@ -292,7 +514,7 @@
       </div>
     </div>
 
-    <!-- TOMBOL LOGO WHATSAPP MELAYANG KANAN BAWAH (SUDAH DIPERBAIKI UNTUK TAMPILAN HP & LAPTOP) -->
+    <!-- TOMBOL LOGO WHATSAPP MELAYANG KANAN BAWAH -->
     <button
       type="button"
       onclick="window.app.openWhatsApp('Halo Admin, saya tertarik berkonsultasi mengenai pembuatan aplikasi digital di ' + window.app.getSiteName())"
@@ -301,7 +523,6 @@
       class="floating-wa-btn"
     >
       <span class="floating-wa-online-dot"></span>
-      <!-- SVG Logo Resmi WhatsApp Proporsional -->
       <svg class="floating-wa-icon fill-current shrink-0" viewBox="0 0 24 24">
         <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.625.846 5.059 2.284 7.033l-1.496 5.467 5.605-1.47c1.908 1.246 4.185 1.97 6.607 1.97 6.627 0 12-5.373 12-12s-5.373-12-12-12z"/>
       </svg>
@@ -356,7 +577,7 @@
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         </div>
         <p class="text-xs font-bold text-white leading-snug">Siap SPK, BAST, Cap & Faktur Pajak Instansi</p>
-        <button onclick="window.app.openOrderModal('Konsultasi Pembuatan Aplikasi')" class="mt-3 w-full py-2 rounded-lg sky-btn-glow text-white text-xs font-bold transition flex items-center justify-center gap-1.5">
+        <button onclick="window.app.openOrderModal('Konsultasi Pembuatan Aplikasi')" class="mt-3 w-full py-2 rounded-lg btn-glass-3d-primary text-xs font-bold transition flex items-center justify-center gap-1.5">
           <span>Hire Us</span>
           <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </button>
@@ -394,7 +615,7 @@
             <span id="top-role-badge" class="hidden sm:inline-block px-2.5 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] font-bold text-sky-400">
               Publik
             </span>
-            <button onclick="window.app.openOrderModal('Hire Custom Developer')" class="px-4 py-2 rounded-lg sky-btn-glow text-white text-xs font-bold transition">
+            <button onclick="window.app.openOrderModal('Hire Custom Developer')" class="px-4 py-2 rounded-lg btn-glass-3d-primary text-xs font-bold transition">
               Hire Me
             </button>
             <button id="btn-top-logout" onclick="window.app.logout()" class="hidden px-3 py-2 rounded-lg bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:bg-rose-500/30 text-xs font-bold transition">
@@ -405,7 +626,7 @@
       </header>
 
       <!-- ============================================================
-           VIEW 1: HOME (HERO + ABOUT + SERVICES + FEATURED CATALOG)
+           VIEW 1: HOME (HERO + ABOUT + SERVICES + 3D FEATURED CATALOG)
            ============================================================ -->
       <main id="view-home" class="space-y-20">
         <!-- 1. HERO SECTION -->
@@ -429,11 +650,11 @@
                 </p>
 
                 <div class="flex flex-wrap items-center gap-3 pt-2">
-                  <button onclick="window.app.switchTab('catalog')" class="px-5 py-2.5 rounded-lg sky-btn-glow text-white text-xs font-bold flex items-center gap-2 transition">
-                    <span>Lihat Katalog Aplikasi</span>
+                  <button onclick="window.app.switchTab('catalog')" class="px-5 py-2.5 btn-glass-3d-primary text-xs font-bold flex items-center gap-2 transition">
+                    <span>Lihat Katalog 3D</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                   </button>
-                  <button onclick="window.app.openOrderModal('Konsultasi Aplikasi Custom')" class="px-5 py-2.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-white border border-slate-700 text-xs font-bold flex items-center gap-2 transition">
+                  <button onclick="window.app.openOrderModal('Konsultasi Aplikasi Custom')" class="px-5 py-2.5 btn-glass-3d-secondary text-xs font-bold flex items-center gap-2 transition">
                     <i data-lucide="mail" class="w-4 h-4 text-sky-400"></i>
                     <span>Contact Me</span>
                   </button>
@@ -507,11 +728,11 @@
               </div>
 
               <div class="pt-3 flex flex-wrap gap-3">
-                <button onclick="window.app.switchTab('tracker')" class="px-5 py-2.5 rounded-lg sky-btn-glow text-white text-xs font-bold flex items-center gap-2 transition">
+                <button onclick="window.app.switchTab('tracker')" class="px-5 py-2.5 btn-glass-3d-primary text-xs font-bold flex items-center gap-2 transition">
                   <span>Cek Progres Proyek</span>
                   <i data-lucide="radar" class="w-4 h-4"></i>
                 </button>
-                <button onclick="window.app.switchTab('portal')" class="px-5 py-2.5 rounded-lg bg-[#0E1624] hover:bg-slate-800 text-slate-200 border border-slate-800 text-xs font-bold flex items-center gap-2 transition">
+                <button onclick="window.app.switchTab('portal')" class="px-5 py-2.5 btn-glass-3d-secondary text-xs font-bold flex items-center gap-2 transition">
                   <i data-lucide="lock" class="w-3.5 h-3.5 text-sky-400"></i>
                   <span>Login Klien / Admin CMS</span>
                 </button>
@@ -593,19 +814,34 @@
           </div>
         </section>
 
-        <!-- 4. FEATURED PROJECTS / KATALOG UNGGULAN -->
-        <section class="max-w-6xl mx-auto px-4 sm:px-8 space-y-6">
+        <!-- 4. FEATURED PROJECTS / KATALOG UNGGULAN (3D GLASS HORIZONTAL CAROUSEL) -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-8 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span class="text-xs font-extrabold uppercase tracking-widest text-sky-400">FEATURED CATALOG & PROJECTS</span>
+              <span class="text-xs font-extrabold uppercase tracking-widest text-sky-400">3D INTERACTIVE SHOWCASE</span>
               <h3 class="text-xl sm:text-2xl font-extrabold text-white mt-1">Katalog Aplikasi Siap Pakai</h3>
+              <p class="text-xs text-slate-400">Geser ke kiri atau kanan untuk melihat produk unggulan dalam tampilan 3D</p>
             </div>
-            <button onclick="window.app.switchTab('catalog')" class="text-xs font-bold text-sky-400 hover:text-sky-300 flex items-center gap-1.5">
-              <span>View All Projects</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="window.app.scrollCatalogCarousel('home-featured-catalog', -1)" class="carousel-nav-orb" title="Geser Kiri">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+              </button>
+              <button type="button" onclick="window.app.scrollCatalogCarousel('home-featured-catalog', 1)" class="carousel-nav-orb" title="Geser Kanan">
+                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+              </button>
+              <button onclick="window.app.switchTab('catalog')" class="ml-2 px-4 py-2 btn-glass-3d-secondary text-xs font-bold flex items-center gap-1.5">
+                <span>Buka Menu Katalog</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-sky-400"></i>
+              </button>
+            </div>
           </div>
-          <div id="home-featured-catalog" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+
+          <div class="catalog-3d-stage">
+            <div id="home-featured-catalog" onscroll="window.app.updateCarousel3DEffect('home-featured-catalog')" class="catalog-carousel-track">
+              <!-- Di-render secara dinamis oleh JS -->
+            </div>
+            <div id="home-featured-dots" class="flex items-center justify-center gap-2 mt-2"></div>
+          </div>
         </section>
 
         <!-- 5. LET'S WORK TOGETHER CTA BANNER -->
@@ -616,7 +852,7 @@
               Punya ide aplikasi kustom untuk sekolah, dinas, atau bisnis Anda? Mari diskusikan kebutuhan sistem Anda dan wujudkan bersama <b id="cta-company-text">CV. Mangge Prompt Digital Studio</b>.
             </p>
             <div class="pt-2">
-              <button onclick="window.app.openOrderModal('Konsultasi Proyek Baru')" class="px-6 py-3 rounded-lg sky-btn-glow text-white text-xs font-extrabold inline-flex items-center gap-2 transition">
+              <button onclick="window.app.openOrderModal('Konsultasi Proyek Baru')" class="px-6 py-3 btn-glass-3d-primary text-xs font-extrabold inline-flex items-center gap-2 transition">
                 <span>Get In Touch</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
               </button>
@@ -626,26 +862,28 @@
       </main>
 
       <!-- ============================================================
-           VIEW 2: FULL KATALOG APLIKASI (STORE & FILTER)
+           VIEW 2: FULL KATALOG APLIKASI (3D COVERFLOW HORIZONTAL CAROUSEL)
            ============================================================ -->
-      <section id="view-catalog" class="hidden max-w-6xl w-full mx-auto px-4 sm:px-8 py-10 space-y-8">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+      <section id="view-catalog" class="hidden max-w-6xl w-full mx-auto px-4 sm:px-8 py-10 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
           <div>
-            <span class="text-xs font-extrabold uppercase tracking-widest text-sky-400">DIGITAL STORE & CATALOG</span>
-            <h2 class="text-2xl font-extrabold text-white mt-1">Katalog Aplikasi & Sistem Informasi</h2>
-            <p class="text-xs text-slate-400 mt-1">Pilih aplikasi siap pakai atau ajukan kustomisasi fitur sesuai kebutuhan instansi Anda.</p>
+            <span class="text-xs font-extrabold uppercase tracking-widest text-sky-400">3D FROSTED GLASS CATALOG</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Katalog Aplikasi & Sistem Informasi</h2>
+            <p class="text-xs text-slate-400 mt-1">Pilih aplikasi siap pakai atau ajukan kustomisasi fitur sesuai kebutuhan instansi Anda — geser kartu ke kanan & kiri.</p>
           </div>
+
+          <!-- Filter Pencarian, Kategori & Tombol Geser 2 Arah -->
           <div class="flex flex-wrap items-center gap-2.5">
             <div class="relative">
               <input
                 type="text"
                 oninput="window.app.handleSearch(this.value)"
                 placeholder="Cari aplikasi..."
-                class="pl-3.5 pr-9 py-2 rounded-lg bg-[#0E1624] border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-sky-400"
+                class="pl-3.5 pr-9 py-2.5 rounded-xl bg-slate-900/70 backdrop-blur-md border border-white/15 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-sky-400 shadow-inner"
               />
-              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2"></i>
+              <i data-lucide="search" class="w-3.5 h-3.5 text-sky-400 absolute right-3 top-1/2 -translate-y-1/2"></i>
             </div>
-            <select onchange="window.app.filterCategory(this.value)" class="px-3.5 py-2 rounded-lg bg-[#0E1624] border border-slate-700 text-xs font-bold text-slate-200 focus:outline-none focus:border-sky-400">
+            <select onchange="window.app.filterCategory(this.value)" class="px-3.5 py-2.5 rounded-xl bg-slate-900/70 backdrop-blur-md border border-white/15 text-xs font-bold text-slate-100 focus:outline-none focus:border-sky-400">
               <option value="ALL">Semua Kategori</option>
               <option value="Pendidikan & CBT">Pendidikan & CBT</option>
               <option value="E-Government">E-Government</option>
@@ -653,7 +891,47 @@
             </select>
           </div>
         </div>
-        <div id="full-catalog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <!-- Panggung 3D Coverflow Horizontal Slider -->
+        <div class="catalog-3d-stage">
+          <!-- Tombol Melayang Panah Kiri -->
+          <button
+            type="button"
+            onclick="window.app.scrollCatalogCarousel('full-catalog-grid', -1)"
+            class="carousel-nav-orb absolute left-1 sm:left-3 top-1/2 -translate-y-1/2"
+            title="Geser ke Kiri"
+          >
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+          </button>
+
+          <!-- Track Horizontal 2 Arah -->
+          <div
+            id="full-catalog-grid"
+            onscroll="window.app.updateCarousel3DEffect('full-catalog-grid')"
+            class="catalog-carousel-track"
+          >
+            <!-- Di-render secara dinamis oleh JS -->
+          </div>
+
+          <!-- Tombol Melayang Panah Kanan -->
+          <button
+            type="button"
+            onclick="window.app.scrollCatalogCarousel('full-catalog-grid', 1)"
+            class="carousel-nav-orb absolute right-1 sm:right-3 top-1/2 -translate-y-1/2"
+            title="Geser ke Kanan"
+          >
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+          </button>
+
+          <!-- Indikator Titik & Petunjuk Geser -->
+          <div class="flex flex-col items-center gap-2 mt-2">
+            <div id="full-catalog-dots" class="flex items-center justify-center gap-2"></div>
+            <span class="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5">
+              <i data-lucide="move-horizontal" class="w-3.5 h-3.5 text-sky-400"></i>
+              <span>Geser ke kiri / kanan atau klik kartu di samping untuk memfokuskan ke tengah</span>
+            </span>
+          </div>
+        </div>
       </section>
 
       <!-- ============================================================
@@ -668,7 +946,7 @@
               <p class="text-xs text-slate-400">Masukkan Kode Tracking Proyek Anda (contoh: <code class="text-sky-400 font-bold">MP-2026-01</code>) untuk melihat persentase pengerjaan secara langsung.</p>
               <div class="flex gap-2">
                 <input id="input-tracking-code" type="text" placeholder="Kode Proyek (MP-2026-01)" class="flex-1 px-3.5 py-2.5 rounded-lg bg-[#080D16] border border-slate-700 text-xs font-bold text-white uppercase focus:outline-none focus:border-sky-400" />
-                <button onclick="window.app.searchTrackingCode()" class="px-4 py-2.5 rounded-lg sky-btn-glow text-white text-xs font-bold">Cek</button>
+                <button onclick="window.app.searchTrackingCode()" class="px-4 py-2.5 btn-glass-3d-primary text-xs font-bold">Cek</button>
               </div>
               <div id="tracking-result-box" class="pt-2"></div>
             </div>
@@ -722,7 +1000,7 @@
                 <textarea id="order-notes" required rows="4" placeholder="Tuliskan detail modul, role pengguna, atau laporan yang Anda inginkan..." class="w-full px-3.5 py-2.5 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:outline-none focus:border-sky-400"></textarea>
               </div>
 
-              <button type="submit" class="w-full py-3 rounded-lg sky-btn-glow text-white text-xs font-extrabold transition">
+              <button type="submit" class="w-full py-3 btn-glass-3d-primary text-xs font-extrabold transition">
                 Kirim Pesanan & Terbitkan Kode Tracking
               </button>
             </form>
@@ -773,7 +1051,7 @@
               <label class="block text-xs font-bold text-slate-300 mb-1.5">Password</label>
               <input id="input-auth-password" required type="password" placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:outline-none focus:border-sky-400" />
             </div>
-            <button type="submit" class="w-full py-3 rounded-lg sky-btn-glow text-white text-xs font-extrabold transition">
+            <button type="submit" class="w-full py-3 btn-glass-3d-primary text-xs font-extrabold transition">
               Masuk Sekarang
             </button>
           </form>
@@ -804,16 +1082,14 @@
                 Supabase Auth Administrator
               </span>
               <h3 class="text-xl font-extrabold text-white mt-1.5">Dashboard CMS, Background Studio & Executive SPJ Suite</h3>
-              <p class="text-xs text-slate-400">Kelola Nama Website vs Nama Perusahaan, Ganti Foto/Background, Upload Logo & Cap Stempel, serta Cetak Dokumen SPJ A4.</p>
+              <p class="text-xs text-slate-400">Kelola Nama Website vs Nama Perusahaan, Ganti Foto/Background, Upload & Edit Katalog Aplikasi, serta Cetak Dokumen SPJ A4.</p>
             </div>
             <button onclick="window.app.logout()" class="px-4 py-2 rounded-lg bg-rose-600 text-white text-xs font-bold">
               Logout Admin
             </button>
           </div>
 
-          <!-- =========================================================================
-               1. PENGATURAN IDENTITAS (NAMA WEB VS PERUSAHAAN), TEMA BACKGROUND, LOGO, CAP & REKENING
-               ========================================================================= -->
+          <!-- 1. PENGATURAN IDENTITAS (NAMA WEB VS PERUSAHAAN), TEMA BACKGROUND, LOGO, CAP & REKENING -->
           <div class="dev-card p-6 space-y-6 border-sky-500/30">
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
@@ -825,7 +1101,6 @@
             </div>
 
             <div class="space-y-6">
-              <!-- Baris A: Pemisahan Nama Website & Nama Perusahaan Resmi -->
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
                   <label class="block text-[11px] font-extrabold text-sky-400 mb-1">Nama Website / Domain *</label>
@@ -841,7 +1116,6 @@
                 </div>
               </div>
 
-              <!-- Baris B: Pimpinan, Tagline & Statistik -->
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                   <label class="block text-[11px] font-bold text-slate-300 mb-1">Nama Pimpinan / Penandatangan</label>
@@ -861,7 +1135,7 @@
                 </div>
               </div>
 
-              <!-- Baris C: MENU GANTI FOTO & BACKGROUND TEMA (ADA PRESET + UPLOAD + URL) -->
+              <!-- MENU GANTI FOTO & BACKGROUND TEMA -->
               <div class="p-4 rounded-xl bg-[#080D16] border border-sky-500/30 space-y-4">
                 <div class="flex flex-wrap items-center justify-between gap-2">
                   <h5 class="text-xs font-extrabold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -954,7 +1228,7 @@
                 </div>
               </div>
 
-              <!-- Baris D: Rekening & Metode Pembayaran Resmi -->
+              <!-- Rekening & Metode Pembayaran Resmi -->
               <div class="p-4 rounded-xl bg-[#080D16] border border-slate-800 space-y-3">
                 <h5 class="text-xs font-extrabold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
                   <i data-lucide="credit-card" class="w-4 h-4"></i> Rekening & Metode Pembayaran Resmi (Tercetak di Invoice, SPK & Kwitansi)
@@ -979,9 +1253,8 @@
                 </div>
               </div>
 
-              <!-- Baris E: Upload Logo & Upload Cap/Stempel Resmi + Kalibrasi Posisi Cap -->
+              <!-- Upload Logo & Upload Cap/Stempel Resmi + Kalibrasi Posisi Cap -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Box Upload Logo -->
                 <div class="p-4 rounded-xl bg-[#080D16] border border-slate-800 flex items-center gap-4">
                   <div class="w-16 h-16 rounded-xl bg-white border border-slate-700 flex items-center justify-center p-1.5 shrink-0 overflow-hidden">
                     <img id="preview-setting-logo" src="" alt="Preview Logo" class="max-w-full max-h-full object-contain" />
@@ -993,7 +1266,6 @@
                   </div>
                 </div>
 
-                <!-- Box Upload Cap / Stempel + Pengatur Posisi Cap -->
                 <div class="p-4 rounded-xl bg-[#080D16] border border-slate-800 space-y-3">
                   <div class="flex items-center gap-4">
                     <div class="w-16 h-16 rounded-xl bg-white border border-slate-700 flex items-center justify-center p-1.5 shrink-0 overflow-hidden">
@@ -1006,7 +1278,6 @@
                     </div>
                   </div>
 
-                  <!-- Kalibrasi Posisi Cap Naik-Turun & Ukuran -->
                   <div class="grid grid-cols-3 gap-3 pt-2 border-t border-slate-800 text-[11px]">
                     <div>
                       <label class="block text-slate-400 font-bold mb-1">Posisi Vertikal Cap (<span id="lbl-stamp-y">22</span>px)</label>
@@ -1026,7 +1297,7 @@
 
               <div class="flex items-center justify-end gap-3">
                 <span id="save-settings-status" class="text-xs font-bold text-emerald-400 hidden">✓ Tersimpan!</span>
-                <button type="button" id="btn-save-cms-settings" onclick="window.app.saveCmsSettings(event)" class="px-6 py-2.5 rounded-lg sky-btn-glow text-white text-xs font-extrabold flex items-center gap-2 cursor-pointer active:scale-95 transition">
+                <button type="button" id="btn-save-cms-settings" onclick="window.app.saveCmsSettings(event)" class="px-6 py-2.5 btn-glass-3d-primary text-xs font-extrabold flex items-center gap-2 cursor-pointer active:scale-95 transition">
                   <i data-lucide="check-circle" class="w-4 h-4"></i>
                   <span id="btn-save-cms-text">Simpan Pengaturan, Background, Logo, Cap & Rekening</span>
                 </button>
@@ -1034,9 +1305,7 @@
             </div>
           </div>
 
-          <!-- =========================================================================
-               2. GENERATOR DOKUMEN SPJ EKSEKUTIF & MODE PAJAK INSTANSI (DENGAN QR & NIP)
-               ========================================================================= -->
+          <!-- 2. GENERATOR DOKUMEN SPJ EKSEKUTIF & MODE PAJAK INSTANSI -->
           <div class="dev-card p-6 sm:p-7 space-y-6 border-indigo-500/40 bg-gradient-to-b from-[#0E1624] to-[#0A101C]">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
               <div>
@@ -1054,13 +1323,12 @@
                 <button type="button" onclick="window.app.saveSpjDocument()" class="px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center gap-1.5 transition">
                   <i data-lucide="save" class="w-4 h-4"></i> Simpan Arsip SPJ
                 </button>
-                <button type="button" onclick="window.print()" class="px-4 py-2.5 rounded-lg sky-btn-glow text-white text-xs font-extrabold flex items-center gap-1.5 transition">
+                <button type="button" onclick="window.print()" class="px-4 py-2.5 btn-glass-3d-primary text-xs font-extrabold flex items-center gap-1.5 transition">
                   <i data-lucide="printer" class="w-4 h-4"></i> Cetak Dokumen A4
                 </button>
               </div>
             </div>
 
-            <!-- 4 TOMBOL PILL SESUAI GAMBAR REFERENSI (2x2 GRID) -->
             <div class="bg-white p-4 rounded-2xl shadow-xl max-w-2xl mx-auto">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <button type="button" id="pill-doc-spk" onclick="window.app.selectSpjDocType('SPK')" class="doc-pill-btn doc-pill-active">
@@ -1078,10 +1346,7 @@
               </div>
             </div>
 
-            <!-- FORM PARAMETER DOKUMEN, NIP PEJABAT & MODE PAJAK INSTANSI -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-
-              <!-- Kolom Kiri: Form Parameter & Pajak (5 Kolom) -->
               <div class="lg:col-span-5 space-y-3.5 bg-[#080D16] p-5 rounded-xl border border-slate-800">
                 <h5 class="text-xs font-extrabold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
                   <i data-lucide="sliders" class="w-4 h-4"></i> Data Instansi, Pejabat (NIP) & Pajak
@@ -1116,7 +1381,6 @@
                   </div>
                 </div>
 
-                <!-- Blok Khusus Kepala Sekolah / PPK + NIP -->
                 <div class="p-3 rounded-lg bg-[#0E1624] border border-slate-800 space-y-2">
                   <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-400 block">Data Kepala Sekolah / PPK / Pengguna Anggaran</span>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -1131,7 +1395,6 @@
                   </div>
                 </div>
 
-                <!-- Blok Khusus Bendahara + NIP -->
                 <div class="p-3 rounded-lg bg-[#0E1624] border border-slate-800 space-y-2">
                   <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 block">Data Bendahara Pengeluaran / Bendahara BOS</span>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -1178,7 +1441,6 @@
                   </select>
                 </div>
 
-                <!-- Ringkasan Kalkulasi Pajak Real-Time -->
                 <div class="p-3.5 rounded-xl bg-[#0E1624] border border-slate-800 space-y-1.5 text-xs">
                   <div class="flex justify-between text-slate-400">
                     <span>Dasar Pengenaan Pajak (DPP):</span>
@@ -1203,39 +1465,93 @@
                 </div>
               </div>
 
-              <!-- Kolom Kanan: Kertas Dokumen A4 Eksekutif (7 Kolom) -->
               <div class="lg:col-span-7">
-                <div id="spj-print-paper" class="spj-executive-paper p-6 sm:p-9 min-h-[760px] flex flex-col justify-between">
-                  <!-- Di-render otomatis oleh renderSpjDocumentPaper() -->
-                </div>
+                <div id="spj-print-paper" class="spj-executive-paper p-6 sm:p-9 min-h-[760px] flex flex-col justify-between"></div>
               </div>
-
             </div>
 
-            <!-- Riwayat Dokumen SPJ Tersimpan -->
             <div class="pt-4 border-t border-slate-800">
               <h5 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-3">Arsip Dokumen SPJ & Faktur Tersimpan</h5>
               <div id="admin-spj-history" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs"></div>
             </div>
           </div>
 
-          <!-- 3. Tambah & Kelola Katalog Aplikasi -->
-          <div class="dev-card p-6 space-y-4">
-            <h4 class="text-sm font-extrabold text-sky-400 uppercase tracking-wider">3. Manajemen Katalog Aplikasi (Featured Projects)</h4>
-            <form onsubmit="window.app.addCatalogApp(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <input id="cat-title" required type="text" placeholder="Nama Aplikasi (misal: E-Monitoring SD)" class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
-              <select id="cat-category" class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white">
-                <option value="Pendidikan & CBT">Pendidikan & CBT</option>
-                <option value="E-Government">E-Government</option>
-                <option value="Bisnis & UMKM">Bisnis & UMKM</option>
-              </select>
-              <input id="cat-price" required type="text" placeholder="Harga (misal: Rp 2.500.000)" class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
-              <input id="cat-tech" required type="text" placeholder="Tech Stack (misal: Supabase / PWA / JS)" class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
-              <input id="cat-demo" type="url" placeholder="URL Live Demo (opsional)" class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
-              <input id="cat-desc" required type="text" placeholder="Deskripsi singkat aplikasi..." class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
-              <div class="sm:col-span-3 flex justify-end">
-                <button type="submit" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold">
-                  + Tambahkan ke Katalog
+          <!-- 3. MANAJEMEN KATALOG APLIKASI (UPLOAD GAMBAR RINGAN & FITUR EDIT) -->
+          <div id="admin-catalog-section" class="dev-card p-6 space-y-5 border-emerald-500/30">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+              <div>
+                <h4 class="text-sm font-extrabold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                  <i data-lucide="package-plus" class="w-4 h-4"></i>
+                  <span id="catalog-form-heading">3. Manajemen Katalog Aplikasi (Tambah / Edit & Upload Gambar Ringan)</span>
+                </h4>
+                <p class="text-[11px] text-slate-400 mt-0.5">Unggah screenshot aplikasi Anda — sistem otomatis mengonversi & mengompresi ukuran gambar agar ringan dan cepat dimuat di Carousel 3D.</p>
+              </div>
+              <span id="catalog-edit-badge" class="hidden px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-extrabold">
+                ✏️ Mode Edit Produk Aktif
+              </span>
+            </div>
+
+            <form id="form-admin-catalog" onsubmit="window.app.saveCatalogApp(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Nama Produk Aplikasi *</label>
+                  <input id="cat-title" required type="text" placeholder="Contoh: E-Monitoring SD Pro" class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:border-sky-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Kategori Katalog *</label>
+                  <select id="cat-category" class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:border-sky-400 focus:outline-none">
+                    <option value="Pendidikan & CBT">Pendidikan & CBT</option>
+                    <option value="E-Government">E-Government</option>
+                    <option value="Bisnis & UMKM">Bisnis & UMKM</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Harga / Label Lisensi *</label>
+                  <input id="cat-price" required type="text" placeholder="Contoh: Rp 2.500.000" class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:border-sky-400 focus:outline-none" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Tech Stack *</label>
+                  <input id="cat-tech" required type="text" placeholder="Contoh: Supabase / PWA / JS" class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:border-sky-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-300 mb-1">URL Live Demo (Opsional)</label>
+                  <input id="cat-demo" type="url" placeholder="https://manggeprompt.my.id/demo" class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:border-sky-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-300 mb-1">Deskripsi Singkat Fitur *</label>
+                  <input id="cat-desc" required type="text" placeholder="Ringkasan modul dan keunggulan aplikasi..." class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white focus:border-sky-400 focus:outline-none" />
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-[#080D16] border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="w-28 h-20 rounded-lg bg-[#0E1624] border border-slate-700 overflow-hidden flex items-center justify-center shrink-0 relative">
+                  <img id="preview-cat-image" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=70" alt="Preview Katalog" class="w-full h-full object-cover" />
+                  <span id="cat-img-size-badge" class="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/75 text-[9px] font-bold text-emerald-400 hidden">Ringan</span>
+                </div>
+                <div class="flex-1 space-y-2 w-full">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <label class="text-xs font-extrabold text-emerald-400 flex items-center gap-1.5">
+                      <i data-lucide="image-plus" class="w-4 h-4"></i> Upload Gambar Thumbnail Katalog (Otomatis Dikonversi agar Ringan)
+                    </label>
+                    <span class="text-[10px] text-slate-400">Resolusi otomatis dioptimasi ke 720p (≤ 40 KB)</span>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <input id="cat-file-input" type="file" accept="image/*" onchange="window.app.handleCatalogImageUpload(event)" class="block w-full text-[11px] text-slate-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[11px] file:font-bold file:bg-emerald-500/20 file:text-emerald-300 hover:file:bg-emerald-500/30" />
+                    <input id="cat-image-url" type="text" oninput="window.app.syncCatalogImagePreview(this.value)" placeholder="Atau tempel URL gambar katalog..." class="w-full px-3 py-1.5 rounded-lg bg-[#0E1624] border border-slate-700 text-[11px] text-slate-200 focus:border-sky-400 focus:outline-none" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-end gap-2.5">
+                <button type="button" id="btn-cancel-edit-catalog" onclick="window.app.cancelEditCatalog()" class="hidden px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+                  Batal Edit
+                </button>
+                <button type="submit" id="btn-submit-catalog" class="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-lg shadow-emerald-600/20 transition">
+                  <i data-lucide="check" class="w-4 h-4"></i>
+                  <span id="btn-submit-catalog-text">+ Tambahkan ke Katalog</span>
                 </button>
               </div>
             </form>
@@ -1244,11 +1560,12 @@
               <table class="w-full text-left text-xs">
                 <thead>
                   <tr class="border-b border-slate-800 text-slate-400">
-                    <th class="pb-2">Nama Produk</th>
-                    <th class="pb-2">Kategori</th>
-                    <th class="pb-2">Tech Stack</th>
-                    <th class="pb-2">Harga</th>
-                    <th class="pb-2 text-right">Aksi</th>
+                    <th class="pb-2.5">Gambar</th>
+                    <th class="pb-2.5">Nama Produk</th>
+                    <th class="pb-2.5">Kategori</th>
+                    <th class="pb-2.5">Tech Stack</th>
+                    <th class="pb-2.5">Harga</th>
+                    <th class="pb-2.5 text-right">Aksi (Edit / Hapus)</th>
                   </tr>
                 </thead>
                 <tbody id="admin-catalog-tbody" class="divide-y divide-slate-800/70 text-slate-200"></tbody>
@@ -1289,7 +1606,7 @@
                   <input id="client-acc-name" required type="text" placeholder="Nama Lengkap" class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
                   <input id="client-acc-instansi" required type="text" placeholder="Instansi / Sekolah" class="px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
                 </div>
-                <button type="submit" class="w-full py-2 rounded-lg sky-btn-glow text-white text-xs font-bold">
+                <button type="submit" class="w-full py-2 btn-glass-3d-primary text-xs font-bold">
                   Simpan Akun Klien
                 </button>
               </form>
@@ -1308,7 +1625,7 @@
                 </div>
                 <input id="post-client" required type="text" placeholder="Nama Instansi / Topik Teknis" class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
                 <input id="post-summary" required type="text" placeholder="Ringkasan pembahasan..." class="w-full px-3 py-2 rounded-lg bg-[#080D16] border border-slate-700 text-xs text-white" />
-                <button type="submit" class="w-full py-2 rounded-lg sky-btn-glow text-white text-xs font-bold">
+                <button type="submit" class="w-full py-2 btn-glass-3d-primary text-xs font-bold">
                   Publikasikan
                 </button>
               </form>
@@ -1376,17 +1693,16 @@
 
   </div>
 
-  <!-- APPLICATION MODULE (SUPABASE + HYBRID AUTH + EXECUTIVE SPJ & QR ENGINE) -->
+  <!-- APPLICATION MODULE (SUPABASE + HYBRID AUTH + 3D GLASS COVERFLOW CATALOG) -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
     // ============================================================================
     // KONFIGURASI APLIKASI (SAKLAR DEPLOYMENT)
     // ============================================================================
-   const IS_PREVIEW = false; // Ubah menjadi false SAAT DEPLOY agar mode preview & data dummy hilang dan terhubung 100% ke Supabase
+    const IS_PREVIEW = false; // Ubah menjadi false SAAT DEPLOY agar mode preview & data dummy hilang dan terhubung 100% ke Supabase
     const SUPABASE_URL = "https://wmrjwscrdsllydmiqcep.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indtcmp3c2NyZHNsbHlkbWlxY2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMzgxNTQsImV4cCI6MjEwODYxNDE1NH0.xyrXXcM272fTkzFRQ2qHBPPSOOKO1PaakIqAuiw-ekw";
-
 
     const supabase = !IS_PREVIEW ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
     const LOCAL_SETTINGS_KEY = "manggeprompt_cms_settings_v3";
@@ -1432,6 +1748,7 @@
       loginMode: 'client',
       currentUser: null,
       spjActiveDoc: 'SPK',
+      editingCatalogId: null,
       stampOffsetY: 22,
       stampOffsetX: -52,
       stampWidth: 128,
@@ -1460,7 +1777,7 @@
       spjDocs: []
     };
 
-    function compressImageToDataUrl(file, maxWidth = 800, maxHeight = 800, isPhotoBg = false) {
+    function compressImageToDataUrl(file, maxWidth = 720, maxHeight = 520, useJpegLight = true) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -1478,8 +1795,12 @@
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, width, height);
+            if (useJpegLight) {
+              ctx.fillStyle = '#0E1624';
+              ctx.fillRect(0, 0, width, height);
+            }
             ctx.drawImage(img, 0, 0, width, height);
-            resolve(isPhotoBg ? canvas.toDataURL('image/jpeg', 0.78) : canvas.toDataURL('image/png', 0.85));
+            resolve(useJpegLight ? canvas.toDataURL('image/jpeg', 0.76) : canvas.toDataURL('image/png', 0.85));
           };
           img.onerror = reject;
           img.src = e.target.result;
@@ -1542,6 +1863,7 @@
           tech_stack: 'Supabase / PWA / Tailwind CSS',
           price_label: 'Rp 2.450.000',
           card_theme: 'dark-sky',
+          image_url: PROJECT_THUMBS[0],
           demo_url: 'https://manggeprompt.my.id',
           description: 'Platform ujian berbasis komputer (CBT) mendukung soal bergambar, analisis butir soal, dan e-rapor otomatis.',
           status_badge: 'Best Seller',
@@ -1554,6 +1876,7 @@
           tech_stack: 'PostgreSQL / Chart.js / Cloud',
           price_label: 'Rp 3.800.000',
           card_theme: 'dark-sky',
+          image_url: PROJECT_THUMBS[1],
           demo_url: 'https://manggeprompt.my.id',
           description: 'Sistem pemantauan progres fisik (0%, 30%, 70%, 100%) dan rekomendasi pencairan terintegrasi.',
           status_badge: 'Ready',
@@ -2138,6 +2461,121 @@
     }
 
     // ============================================================================
+    // MESIN ANIMASI 3D COVERFLOW CAROUSEL (TENGAH MEMBESAR, SAMPING MENGECIL)
+    // ============================================================================
+    function buildCatalogCardHtml(item, idx, containerId) {
+      const thumb = item.image_url || PROJECT_THUMBS[idx % PROJECT_THUMBS.length];
+      return `
+        <div
+          class="glass-3d-card flex flex-col justify-between overflow-hidden cursor-pointer"
+          data-index="${idx}"
+          onclick="window.app.focusCardByClick('${containerId}', ${idx}, event)"
+        >
+          <div>
+            <!-- Gambar Preview dengan Bingkai Dalam Kaca -->
+            <div class="relative h-48 m-3 rounded-2xl overflow-hidden bg-slate-950 border border-white/15 shadow-lg">
+              <img src="${thumb}" alt="${item.title}" class="w-full h-full object-cover opacity-90 transition duration-500 hover:scale-105" />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#080D16]/90 via-transparent to-black/20"></div>
+              <span class="badge-glass-3d absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-extrabold text-sky-300 tracking-wide">
+                ${item.category}
+              </span>
+              <span class="badge-price-3d absolute bottom-3 right-3 px-3.5 py-1 rounded-xl text-white text-xs font-extrabold tracking-tight">
+                ${item.price_label}
+              </span>
+            </div>
+
+            <!-- Konten Teks Kartu -->
+            <div class="px-5 pb-3 pt-1 space-y-2">
+              <h4 class="text-base font-extrabold text-white leading-snug drop-shadow-sm">${item.title}</h4>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-500/10 border border-sky-400/20 text-[11px] font-bold text-sky-300">
+                <i data-lucide="layers" class="w-3 h-3"></i>
+                <span>${item.tech_stack}</span>
+              </div>
+              <p class="text-xs text-slate-300/90 leading-relaxed line-clamp-3 pt-1">${item.description}</p>
+            </div>
+          </div>
+
+          <!-- Footer Tombol Kaca Buram 3D -->
+          <div class="px-5 pb-5 pt-3 mt-2 border-t border-white/10 flex items-center justify-between gap-2.5 relative z-20">
+            ${item.demo_url
+              ? `<a href="${item.demo_url}" target="_blank" onclick="event.stopPropagation()" class="btn-glass-3d-secondary px-3.5 py-2 text-xs flex items-center gap-1.5">
+                   <span>Buka Demo</span>
+                   <i data-lucide="external-link" class="w-3.5 h-3.5 text-sky-400"></i>
+                 </a>`
+              : `<span class="btn-glass-3d-secondary px-3 py-2 text-[11px] opacity-75">Siap Deploy</span>`
+            }
+            <button
+              type="button"
+              onclick="event.stopPropagation(); window.app.openOrderModal('${item.title.replace(/'/g, "\\'")}')"
+              class="btn-glass-3d-primary px-4 py-2 text-xs flex items-center gap-1.5"
+            >
+              <span>Pesan Sekarang</span>
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function applyCoverFlow3DTransform(containerId) {
+      const track = document.getElementById(containerId);
+      if (!track) return;
+      const cards = Array.from(track.querySelectorAll('.glass-3d-card'));
+      if (cards.length === 0) return;
+
+      const trackRect = track.getBoundingClientRect();
+      const trackCenter = trackRect.left + trackRect.width / 2;
+
+      let closestIdx = 0;
+      let minDistance = Infinity;
+
+      cards.forEach((card, idx) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const delta = cardCenter - trackCenter;
+        const absDelta = Math.abs(delta);
+
+        if (absDelta < minDistance) {
+          minDistance = absDelta;
+          closestIdx = idx;
+        }
+
+        // Normalisasi jarak (-1 s/d 1) terhadap lebar kartu
+        const maxDist = Math.max(rect.width * 1.15, 320);
+        const ratio = Math.max(-1.3, Math.min(1.3, delta / maxDist));
+        const absRatio = Math.abs(ratio);
+
+        // Hitung Skala (Tengah = 1.06, Samping = mengecil hingga 0.84)
+        const scale = 1.06 - Math.min(absRatio * 0.22, 0.24);
+        // Hitung Rotasi 3D (Miring menghadap ke tengah)
+        const rotateY = -ratio * 18;
+        // Kedalaman Z & Transparansi
+        const translateZ = (1 - Math.min(absRatio, 1)) * 28;
+        const opacity = 1 - Math.min(absRatio * 0.35, 0.42);
+
+        card.style.transform = `perspective(1200px) translateZ(${translateZ.toFixed(1)}px) scale(${scale.toFixed(3)}) rotateY(${rotateY.toFixed(2)}deg)`;
+        card.style.opacity = opacity.toFixed(2);
+      });
+
+      cards.forEach((card, idx) => {
+        card.classList.toggle('is-center-card', idx === closestIdx);
+      });
+
+      // Update Indikator Dots
+      const dotsId = containerId === 'full-catalog-grid' ? 'full-catalog-dots' : 'home-featured-dots';
+      const dotsBox = document.getElementById(dotsId);
+      if (dotsBox) {
+        dotsBox.innerHTML = cards.map((_, i) => `
+          <button
+            type="button"
+            onclick="window.app.scrollToCatalogCard('${containerId}', ${i})"
+            class="h-2 rounded-full transition-all ${i === closestIdx ? 'w-7 bg-sky-400 shadow-[0_0_10px_#38BDF8]' : 'w-2 bg-slate-700 hover:bg-slate-500'}"
+          ></button>
+        `).join('');
+      }
+    }
+
+    // ============================================================================
     // RENDER SELURUH KOMPONEN UI
     // ============================================================================
     function renderAll() {
@@ -2211,81 +2649,28 @@
 
     function renderFeaturedCatalog() {
       const container = document.getElementById('home-featured-catalog');
-      const items = state.catalog.slice(0, 3);
+      const items = state.catalog;
       if (items.length === 0) {
-        container.innerHTML = `<div class="col-span-full dev-card p-8 text-center text-xs text-slate-400">Belum ada data katalog aplikasi.</div>`;
+        container.innerHTML = `<div class="w-full dev-card p-8 text-center text-xs text-slate-400">Belum ada data katalog aplikasi.</div>`;
         return;
       }
 
-      container.innerHTML = items.map((item, idx) => {
-        const thumb = PROJECT_THUMBS[idx % PROJECT_THUMBS.length];
-        return `
-          <div class="dev-card overflow-hidden flex flex-col justify-between group">
-            <div>
-              <div class="relative h-44 overflow-hidden bg-slate-900 border-b border-slate-800">
-                <img src="${thumb}" alt="${item.title}" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition duration-500" />
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0E1624] via-transparent to-transparent"></div>
-                <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#080D16]/85 border border-slate-700 text-[10px] font-bold text-sky-400">
-                  ${item.category}
-                </span>
-                <span class="absolute top-3 right-3 px-2.5 py-1 rounded bg-sky-500 text-slate-950 text-[10px] font-extrabold">
-                  ${item.price_label}
-                </span>
-              </div>
-              <div class="p-5 space-y-2">
-                <h4 class="text-base font-extrabold text-white leading-snug">${item.title}</h4>
-                <p class="text-xs font-bold text-sky-400">${item.tech_stack}</p>
-                <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed pt-1">${item.description}</p>
-              </div>
-            </div>
-            <div class="px-5 pb-5 pt-2 flex items-center justify-between gap-2">
-              ${item.demo_url ? `<a href="${item.demo_url}" target="_blank" class="px-3.5 py-2 rounded-lg bg-[#080D16] hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 transition">Live Demo</a>` : '<span></span>'}
-              <button onclick="window.app.openOrderModal('${item.title.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-lg sky-btn-glow text-white text-xs font-bold transition">
-                Pesan Aplikasi
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = items.map((item, idx) => buildCatalogCardHtml(item, idx, 'home-featured-catalog')).join('');
+      setTimeout(() => applyCoverFlow3DTransform('home-featured-catalog'), 60);
     }
 
     function renderFullCatalog() {
       const container = document.getElementById('full-catalog-grid');
       const items = getFilteredCatalog();
       if (items.length === 0) {
-        container.innerHTML = `<div class="col-span-full dev-card p-10 text-center text-xs text-slate-400">Belum ada produk pada kategori/pencarian ini.</div>`;
+        container.innerHTML = `<div class="w-full dev-card p-10 text-center text-xs text-slate-400">Belum ada produk pada kategori/pencarian ini.</div>`;
+        const dots = document.getElementById('full-catalog-dots');
+        if (dots) dots.innerHTML = '';
         return;
       }
 
-      container.innerHTML = items.map((item, idx) => {
-        const thumb = PROJECT_THUMBS[idx % PROJECT_THUMBS.length];
-        return `
-          <div class="dev-card overflow-hidden flex flex-col justify-between">
-            <div>
-              <div class="relative h-40 overflow-hidden bg-slate-900 border-b border-slate-800">
-                <img src="${thumb}" alt="${item.title}" class="w-full h-full object-cover opacity-80" />
-                <span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-[#080D16]/90 border border-slate-700 text-[10px] font-bold text-sky-400">
-                  ${item.category}
-                </span>
-                <span class="absolute bottom-3 right-3 px-2.5 py-1 rounded bg-sky-500 text-slate-950 text-xs font-extrabold">
-                  ${item.price_label}
-                </span>
-              </div>
-              <div class="p-5 space-y-2">
-                <h4 class="text-base font-extrabold text-white">${item.title}</h4>
-                <p class="text-xs font-bold text-sky-400">${item.tech_stack}</p>
-                <p class="text-xs text-slate-400 leading-relaxed">${item.description}</p>
-              </div>
-            </div>
-            <div class="px-5 pb-5 pt-2 flex items-center justify-between border-t border-slate-800/60">
-              ${item.demo_url ? `<a href="${item.demo_url}" target="_blank" class="text-xs font-bold text-sky-400 hover:underline">Buka Demo →</a>` : `<span class="text-[11px] text-slate-500">Ready to Deploy</span>`}
-              <button onclick="window.app.openOrderModal('${item.title.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-lg sky-btn-glow text-white text-xs font-bold">
-                Pesan Sekarang
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
+      container.innerHTML = items.map((item, idx) => buildCatalogCardHtml(item, idx, 'full-catalog-grid')).join('');
+      setTimeout(() => applyCoverFlow3DTransform('full-catalog-grid'), 60);
     }
 
     function renderPublicQueue() {
@@ -2413,17 +2798,29 @@
         `).join('') || `<div class="col-span-full text-slate-500">Belum ada arsip dokumen SPJ yang disimpan.</div>`;
       }
 
-      document.getElementById('admin-catalog-tbody').innerHTML = state.catalog.map(c => `
-        <tr>
-          <td class="py-2.5 font-bold">${c.title}</td>
-          <td class="py-2.5">${c.category}</td>
-          <td class="py-2.5 text-sky-400">${c.tech_stack}</td>
-          <td class="py-2.5">${c.price_label}</td>
-          <td class="py-2.5 text-right">
-            <button onclick="window.app.deleteCatalogItem('${c.id}')" class="text-rose-400 hover:underline font-bold">Hapus</button>
-          </td>
-        </tr>
-      `).join('') || `<tr><td colspan="5" class="py-4 text-center text-slate-500">Belum ada produk katalog.</td></tr>`;
+      document.getElementById('admin-catalog-tbody').innerHTML = state.catalog.map((c, idx) => {
+        const thumb = c.image_url || PROJECT_THUMBS[idx % PROJECT_THUMBS.length];
+        const isBeingEdited = state.editingCatalogId === c.id;
+        return `
+          <tr class="${isBeingEdited ? 'bg-sky-500/10' : ''}">
+            <td class="py-2.5 pr-2">
+              <img src="${thumb}" alt="${c.title}" class="w-12 h-9 rounded object-cover border border-slate-700 bg-slate-900" />
+            </td>
+            <td class="py-2.5 font-bold text-white">${c.title}</td>
+            <td class="py-2.5">${c.category}</td>
+            <td class="py-2.5 text-sky-400">${c.tech_stack}</td>
+            <td class="py-2.5 font-semibold">${c.price_label}</td>
+            <td class="py-2.5 text-right space-x-2 whitespace-nowrap">
+              <button type="button" onclick="window.app.startEditCatalogItem('${c.id}')" class="px-2.5 py-1 rounded bg-sky-500/20 hover:bg-sky-500/30 border border-sky-400/40 text-sky-300 font-bold transition">
+                Edit
+              </button>
+              <button type="button" onclick="window.app.deleteCatalogItem('${c.id}')" class="px-2.5 py-1 rounded bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/30 text-rose-400 font-bold transition">
+                Hapus
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('') || `<tr><td colspan="6" class="py-4 text-center text-slate-500">Belum ada produk katalog.</td></tr>`;
 
       document.getElementById('admin-orders-tbody').innerHTML = state.orders.map(o => `
         <tr>
@@ -2493,6 +2890,41 @@
           btn.classList.toggle('text-sky-400', active);
           btn.classList.toggle('text-slate-400', !active);
         });
+
+        // Segarkan kalkulasi 3D saat berpindah ke tab katalog atau home
+        if (tabName === 'catalog') {
+          setTimeout(() => applyCoverFlow3DTransform('full-catalog-grid'), 50);
+        } else if (tabName === 'home') {
+          setTimeout(() => applyCoverFlow3DTransform('home-featured-catalog'), 50);
+        }
+      },
+
+      // Handler Geser 2 Arah Kanan & Kiri pada Carousel 3D
+      updateCarousel3DEffect(containerId) {
+        window.requestAnimationFrame(() => applyCoverFlow3DTransform(containerId));
+      },
+
+      scrollCatalogCarousel(containerId, direction) {
+        const track = document.getElementById(containerId);
+        if (!track) return;
+        const card = track.querySelector('.glass-3d-card');
+        const step = (card ? card.offsetWidth : 340) + 24;
+        track.scrollBy({ left: direction * step, behavior: 'smooth' });
+      },
+
+      scrollToCatalogCard(containerId, index) {
+        const track = document.getElementById(containerId);
+        if (!track) return;
+        const cards = track.querySelectorAll('.glass-3d-card');
+        const target = cards[index];
+        if (!target) return;
+        const scrollLeft = target.offsetLeft - (track.clientWidth - target.offsetWidth) / 2;
+        track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      },
+
+      focusCardByClick(containerId, index, event) {
+        // Jika klik kartu di samping, geser halus ke tengah
+        this.scrollToCatalogCard(containerId, index);
       },
 
       liveUpdateSettingsFromInputs() {
@@ -2575,6 +3007,123 @@
           showToast('Gambar berhasil dimuat & dioptimasi!');
         } catch (err) {
           showToast('Gagal memproses gambar: ' + err.message);
+        }
+      },
+
+      async handleCatalogImageUpload(event) {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        try {
+          const compressedUri = await compressImageToDataUrl(file, 720, 480, true);
+          const sizeKb = Math.round((compressedUri.length * 3) / 4 / 1024);
+
+          document.getElementById('cat-image-url').value = compressedUri;
+          document.getElementById('preview-cat-image').src = compressedUri;
+
+          const badge = document.getElementById('cat-img-size-badge');
+          if (badge) {
+            badge.textContent = `${sizeKb} KB`;
+            badge.classList.remove('hidden');
+          }
+          showToast(`Gambar katalog berhasil dikonversi menjadi super ringan (${sizeKb} KB)!`);
+        } catch (err) {
+          showToast('Gagal mengonversi gambar katalog: ' + err.message);
+        }
+      },
+
+      syncCatalogImagePreview(val) {
+        const preview = document.getElementById('preview-cat-image');
+        if (preview) {
+          preview.src = val.trim() || PROJECT_THUMBS[0];
+        }
+      },
+
+      startEditCatalogItem(id) {
+        const found = state.catalog.find(c => c.id === id);
+        if (!found) return;
+
+        state.editingCatalogId = id;
+        document.getElementById('cat-title').value = found.title || '';
+        document.getElementById('cat-category').value = found.category || 'Pendidikan & CBT';
+        document.getElementById('cat-price').value = found.price_label || '';
+        document.getElementById('cat-tech').value = found.tech_stack || '';
+        document.getElementById('cat-demo').value = found.demo_url || '';
+        document.getElementById('cat-desc').value = found.description || '';
+        document.getElementById('cat-image-url').value = found.image_url || '';
+        document.getElementById('preview-cat-image').src = found.image_url || PROJECT_THUMBS[0];
+
+        document.getElementById('catalog-edit-badge').classList.remove('hidden');
+        document.getElementById('btn-cancel-edit-catalog').classList.remove('hidden');
+        document.getElementById('btn-submit-catalog-text').textContent = 'Simpan Perubahan Katalog';
+
+        renderAdminTables();
+        document.getElementById('admin-catalog-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast(`Mengedit produk: ${found.title}`);
+      },
+
+      cancelEditCatalog() {
+        state.editingCatalogId = null;
+        document.getElementById('form-admin-catalog').reset();
+        document.getElementById('cat-image-url').value = '';
+        document.getElementById('preview-cat-image').src = PROJECT_THUMBS[0];
+        document.getElementById('cat-img-size-badge').classList.add('hidden');
+        document.getElementById('catalog-edit-badge').classList.add('hidden');
+        document.getElementById('btn-cancel-edit-catalog').classList.add('hidden');
+        document.getElementById('btn-submit-catalog-text').textContent = '+ Tambahkan ke Katalog';
+        renderAdminTables();
+      },
+
+      async saveCatalogApp(e) {
+        e.preventDefault();
+        const payload = {
+          title: document.getElementById('cat-title').value.trim(),
+          category: document.getElementById('cat-category').value,
+          price_label: document.getElementById('cat-price').value.trim(),
+          tech_stack: document.getElementById('cat-tech').value.trim(),
+          card_theme: 'dark-sky',
+          demo_url: document.getElementById('cat-demo').value.trim(),
+          description: document.getElementById('cat-desc').value.trim(),
+          image_url: document.getElementById('cat-image-url').value.trim() || PROJECT_THUMBS[0],
+          status_badge: 'Ready',
+          is_featured: true
+        };
+
+        try {
+          if (state.editingCatalogId) {
+            const targetId = state.editingCatalogId;
+            if (IS_PREVIEW) {
+              const idx = state.catalog.findIndex(c => c.id === targetId);
+              if (idx !== -1) state.catalog[idx] = { ...state.catalog[idx], ...payload };
+            } else {
+              const { error } = await supabase.from('catalog_apps').update(payload).eq('id', targetId);
+              if (error) {
+                const { image_url, ...corePayload } = payload;
+                const { error: err2 } = await supabase.from('catalog_apps').update(corePayload).eq('id', targetId);
+                if (err2) throw err2;
+              }
+              await loadAllData();
+            }
+            this.cancelEditCatalog();
+            renderAll();
+            showToast('Perubahan produk katalog berhasil disimpan!');
+          } else {
+            if (IS_PREVIEW) {
+              state.catalog.unshift({ id: 'cat-' + Date.now(), ...payload });
+            } else {
+              const { error } = await supabase.from('catalog_apps').insert([payload]);
+              if (error) {
+                const { image_url, ...corePayload } = payload;
+                const { error: err2 } = await supabase.from('catalog_apps').insert([corePayload]);
+                if (err2) throw err2;
+              }
+              await loadAllData();
+            }
+            this.cancelEditCatalog();
+            renderAll();
+            showToast('Produk baru beserta gambar berhasil ditambahkan ke katalog!');
+          }
+        } catch (err) {
+          showToast('Gagal menyimpan katalog: ' + err.message);
         }
       },
 
@@ -2744,11 +3293,13 @@
       filterCategory(cat) {
         state.selectedCategory = cat;
         renderFullCatalog();
+        lucide.createIcons();
       },
 
       handleSearch(val) {
         state.searchQuery = val;
         renderFullCatalog();
+        lucide.createIcons();
       },
 
       openWhatsApp(text) {
@@ -2899,37 +3450,11 @@
         showToast('Sesi berakhir.');
       },
 
-      async addCatalogApp(e) {
-        e.preventDefault();
-        const newApp = {
-          title: document.getElementById('cat-title').value.trim(),
-          category: document.getElementById('cat-category').value,
-          price_label: document.getElementById('cat-price').value.trim(),
-          tech_stack: document.getElementById('cat-tech').value.trim(),
-          card_theme: 'dark-sky',
-          demo_url: document.getElementById('cat-demo').value.trim(),
-          description: document.getElementById('cat-desc').value.trim(),
-          status_badge: 'Ready',
-          is_featured: true
-        };
-        try {
-          if (IS_PREVIEW) {
-            state.catalog.unshift({ id: 'cat-' + Date.now(), ...newApp });
-          } else {
-            const { error } = await supabase.from('catalog_apps').insert([newApp]);
-            if (error) throw error;
-            await loadAllData();
-          }
-          e.target.reset();
-          renderAll();
-          showToast('Produk ditambahkan ke katalog!');
-        } catch (err) {
-          showToast('Gagal menambah katalog: ' + err.message);
-        }
-      },
-
       async deleteCatalogItem(id) {
         try {
+          if (state.editingCatalogId === id) {
+            this.cancelEditCatalog();
+          }
           if (IS_PREVIEW) {
             state.catalog = state.catalog.filter(c => c.id !== id);
           } else {
@@ -2938,7 +3463,7 @@
             await loadAllData();
           }
           renderAll();
-          showToast('Produk dihapus.');
+          showToast('Produk dihapus dari katalog.');
         } catch (err) {
           showToast('Gagal menghapus: ' + err.message);
         }
@@ -3076,6 +3601,34 @@
         }
       }
     };
+
+    // Dukungan Drag-to-Scroll dengan Mouse pada Track Carousel 3D
+    ['home-featured-catalog', 'full-catalog-grid'].forEach(trackId => {
+      const el = document.getElementById(trackId);
+      if (!el) return;
+      let isDown = false;
+      let startX = 0;
+      let scrollLeft = 0;
+      el.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      });
+      el.addEventListener('mouseleave', () => { isDown = false; });
+      el.addEventListener('mouseup', () => { isDown = false; });
+      el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.4;
+        el.scrollLeft = scrollLeft - walk;
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      applyCoverFlow3DTransform('home-featured-catalog');
+      applyCoverFlow3DTransform('full-catalog-grid');
+    });
 
     // PWA Dynamic Service Worker (1-File Blob)
     if ('serviceWorker' in navigator) {
